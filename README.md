@@ -9,7 +9,23 @@ A web-based tool for performing calculations with timecodes in `hh:mm:ss:ff` for
 - Simple web interface for easy copy/paste from Excel
 - Copy results back to clipboard for Excel
 
-## Installation
+## Quick Start (Easiest Method)
+
+**For non-technical users**, simply double-click the launcher for your platform:
+
+- **Windows**: Double-click `start.bat`
+- **Mac/Linux**: Double-click `start.sh` (or run `./start.sh` in terminal)
+- **All platforms**: Run `python start.py`
+
+The launcher will:
+1. Check if `uv` is installed (and guide you to install it if needed)
+2. Install/update dependencies automatically
+3. Start the application
+4. Open your browser automatically to http://localhost:5000
+
+## Manual Installation
+
+If you prefer to set up manually:
 
 1. Clone the repository:
 ```bash
@@ -22,7 +38,7 @@ cd timecode-calculator
 uv sync
 ```
 
-## Usage
+## Manual Usage
 
 1. Start the Flask application:
 ```bash
@@ -38,6 +54,15 @@ http://localhost:5000
 4. Paste your timecodes (one per line) into the text area
 5. Click "Calculate Sum"
 6. Copy the result back to Excel using the "Copy to Clipboard" button
+
+## Prerequisites
+
+You need to install `uv` (a fast Python package manager):
+
+- **Windows**: Download from https://docs.astral.sh/uv/getting-started/installation/
+- **Mac/Linux**: Run `curl -LsSf https://astral.sh/uv/install.sh | sh`
+
+The launcher scripts will check for this and guide you if it's missing.
 
 ## Timecode Format
 
@@ -58,7 +83,12 @@ Timecodes must be in the format `hh:mm:ss:ff`:
 timecode-calculator/
 ├── app.py              # Flask web application
 ├── timecode.py         # Timecode calculation logic
-├── requirements.txt    # Python dependencies
+├── start.bat           # Windows launcher
+├── start.sh            # Mac/Linux launcher
+├── start.py            # Cross-platform Python launcher
+├── pyproject.toml      # Python project configuration
+├── uv.lock             # Dependency lock file
+├── requirements.txt    # Python dependencies (legacy)
 ├── templates/
 │   └── index.html     # Web interface
 └── static/
