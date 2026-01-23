@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timecode Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Timecode Calculator</h1>
+        <p class="subtitle">Add timecodes in hh:mm:ss:ff format</p>
+
+        <div class="controls">
+            <div class="framerate-group">
+                <label for="framerate">Framerate (fps):</label>
+                <select id="framerate">
+                    <option value="23.976">23.976</option>
+                    <option value="24">24</option>
+                    <option value="25" selected>25</option>
+                    <option value="29.97">29.97</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="60">60</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <label for="timecodes">Timecodes (one per line):</label>
+            <textarea
+                id="timecodes"
+                placeholder="00:00:10:00&#10;00:00:15:12&#10;00:01:05:08"
+                rows="10"
+            ></textarea>
+            <p class="hint">Paste timecodes from Excel, one per line. Format: hh:mm:ss:ff</p>
+        </div>
+
+        <button id="calculateBtn" class="btn-primary">Calculate Sum</button>
+
+        <div id="result" class="result hidden">
+            <h2>Result:</h2>
+            <div id="resultValue" class="result-value"></div>
+            <button id="copyBtn" class="btn-secondary">Copy to Clipboard</button>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <div class="examples">
+            <h3>Example timecodes:</h3>
+            <ul>
+                <li><code>00:00:10:00</code> - 10 seconds</li>
+                <li><code>00:01:30:12</code> - 1 minute, 30 seconds, 12 frames</li>
+                <li><code>01:15:45:23</code> - 1 hour, 15 minutes, 45 seconds, 23 frames</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
