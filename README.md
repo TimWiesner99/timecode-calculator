@@ -19,14 +19,14 @@ cd timecode-calculator
 
 2. Install dependencies:
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ## Usage
 
 1. Start the Flask application:
 ```bash
-python app.py
+uv run python app.py
 ```
 
 2. Open your browser and navigate to:
