@@ -21,7 +21,8 @@ def calculate():
 
     Expects JSON with:
         - timecodes: string with newline-separated timecodes
-        - framerate: integer framerate
+        - mode: 'frames', 'decimal', or 'simple'
+        - framerate: numeric framerate (only used in 'frames' mode)
 
     Returns:
         JSON with result or error message
@@ -29,12 +30,13 @@ def calculate():
     try:
         data = request.get_json()
         timecodes = data.get('timecodes', '')
-        framerate = int(data.get('framerate', 25))
+        mode = data.get('mode', 'frames')
+        framerate = round(float(data.get('framerate', 25)))
 
         if not timecodes.strip():
             return jsonify({'error': 'Please enter at least one timecode'}), 400
 
-        result = add_timecodes(timecodes, framerate)
+        result = add_timecodes(timecodes, mode=mode, framerate=framerate)
         return jsonify({'result': result})
 
     except ValueError as e:
