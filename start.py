@@ -7,8 +7,6 @@ Works on Windows, Mac, and Linux.
 import os
 import sys
 import subprocess
-import webbrowser
-import time
 from pathlib import Path
 
 
@@ -48,33 +46,12 @@ def install_dependencies():
         return False
 
 
-def open_browser():
-    """Open the browser to the application URL."""
-    time.sleep(2)  # Wait for server to start
-    try:
-        webbrowser.open("http://localhost:5000")
-    except Exception:
-        pass  # Silently fail if browser can't be opened
-
-
 def run_app():
-    """Run the Flask application."""
+    """Run the Tkinter application."""
     print()
     print("Starting Timecode Calculator...")
     print()
-    print("The application will open in your browser at:")
-    print("http://localhost:5000")
-    print()
-    print("Press Ctrl+C to stop the server")
-    print("=" * 40)
-    print()
 
-    # Open browser in a separate thread
-    import threading
-    browser_thread = threading.Thread(target=open_browser, daemon=True)
-    browser_thread.start()
-
-    # Run the Flask app
     try:
         subprocess.run(
             ["uv", "run", "python", "app.py"],

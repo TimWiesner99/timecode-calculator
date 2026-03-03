@@ -29,18 +29,10 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo.
 echo Starting Timecode Calculator...
-echo.
-echo The application will open in your browser at:
-echo http://localhost:5000
-echo.
-echo Press Ctrl+C to stop the server
 echo ================================
 echo.
 
-REM Start the browser after a short delay
-start "" http://localhost:5000
-
-REM Run the Flask app
+REM Run the app
 uv run python app.py
 
 pause

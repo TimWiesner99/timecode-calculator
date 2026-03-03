@@ -1,11 +1,10 @@
 [project]
 name = "timecode-calculator"
-version = "0.1.0"
-description = "A web-based tool for performing calculations with timecodes in hh:mm:ss:ff format"
+version = "0.2.0"
+description = "A desktop timecode calculator for adding timecodes in HH:MM:SS:FF, HH:MM:SS,mmm, and HH:MM:SS formats"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "Flask>=3.0.0",
     "pyinstaller>=6.19.0",
 ]
 
