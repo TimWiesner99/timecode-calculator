@@ -416,6 +416,55 @@ def add_timecodes(timecode_list, mode: str = 'frames', framerate: int = 25) -> s
         raise ValueError(f"Unknown mode: '{mode}'. Expected 'frames', 'decimal', or 'simple'")
 
 
+def apply_to_all(timecode_list, offset_str: str, operation: str = 'add',
+                  mode: str = 'frames', framerate: int = 25) -> list[str]:
+    """Apply an offset timecode to every timecode in a list.
+
+    Args:
+        timecode_list: List of timecode strings or a single newline-separated string
+        offset_str: The offset timecode to add or subtract
+        operation: 'add' or 'subtract'
+        mode: One of 'frames', 'decimal', or 'simple'
+        framerate: Frames per second (only used in 'frames' mode)
+
+    Returns:
+        List of result timecode strings
+
+    Raises:
+        ValueError: If any timecode is invalid, mode is unknown, or subtraction
+                    would produce a negative result
+    """
+    if isinstance(timecode_list, str):
+        timecode_list = [tc.strip() for tc in timecode_list.split('\n') if tc.strip()]
+
+    if not timecode_list:
+        return []
+
+    if operation not in ('add', 'subtract'):
+        raise ValueError(f"Unknown operation: '{operation}'. Expected 'add' or 'subtract'")
+
+    cls_map = {
+        'frames': (FrameTimecode, {'fps': framerate}),
+        'decimal': (DecimalTimecode, {}),
+        'simple': (SimpleTimecode, {}),
+    }
+
+    if mode not in cls_map:
+        raise ValueError(f"Unknown mode: '{mode}'. Expected 'frames', 'decimal', or 'simple'")
+
+    tc_cls, parse_kwargs = cls_map[mode]
+    offset = tc_cls.from_string(offset_str, **parse_kwargs)
+
+    results = []
+    for tc_str in timecode_list:
+        tc = tc_cls.from_string(tc_str, **parse_kwargs)
+        if operation == 'add':
+            results.append(str(tc + offset))
+        else:
+            results.append(str(tc - offset))
+    return results
+
+
 __all__ = [
     "TimecodeBase",
     "FrameTimecode",
@@ -423,4 +472,5 @@ __all__ = [
     "SimpleTimecode",
     "Timecode",
     "add_timecodes",
+    "apply_to_all",
 ]

@@ -1,6 +1,6 @@
 """Tests for timecode calculation logic."""
 
-from timecode import FrameTimecode, DecimalTimecode, SimpleTimecode, Timecode, add_timecodes
+from timecode import FrameTimecode, DecimalTimecode, SimpleTimecode, Timecode, add_timecodes, apply_to_all
 
 
 # --- FrameTimecode tests ---
@@ -125,6 +125,44 @@ def test_simple_add_timecodes():
     print("PASS Test 12 passed")
 
 
+# --- apply_to_all tests ---
+
+def test_apply_to_all_add_frames():
+    """Test adding an offset to a list of frame timecodes."""
+    timecodes = "00:00:10:00\n00:00:20:00\n00:01:00:00"
+    results = apply_to_all(timecodes, "00:00:05:00", operation='add', mode='frames', framerate=25)
+    print(f"\nTest 13 (apply_to_all add frames): {results}")
+    assert results == ["00:00:15:00", "00:00:25:00", "00:01:05:00"], f"Got {results}"
+    print("PASS Test 13 passed")
+
+
+def test_apply_to_all_subtract_frames():
+    """Test subtracting an offset from a list of frame timecodes."""
+    timecodes = "00:00:30:00\n00:01:00:00"
+    results = apply_to_all(timecodes, "00:00:10:00", operation='subtract', mode='frames', framerate=25)
+    print(f"\nTest 14 (apply_to_all subtract frames): {results}")
+    assert results == ["00:00:20:00", "00:00:50:00"], f"Got {results}"
+    print("PASS Test 14 passed")
+
+
+def test_apply_to_all_decimal():
+    """Test adding an offset to decimal timecodes."""
+    timecodes = "00:00:10,000\n00:00:20,500"
+    results = apply_to_all(timecodes, "00:00:05,250", operation='add', mode='decimal')
+    print(f"\nTest 15 (apply_to_all decimal): {results}")
+    assert results == ["00:00:15,250", "00:00:25,750"], f"Got {results}"
+    print("PASS Test 15 passed")
+
+
+def test_apply_to_all_simple():
+    """Test subtracting an offset from simple timecodes."""
+    timecodes = "00:01:00\n00:02:30"
+    results = apply_to_all(timecodes, "00:00:30", operation='subtract', mode='simple')
+    print(f"\nTest 16 (apply_to_all simple subtract): {results}")
+    assert results == ["00:00:30", "00:02:00"], f"Got {results}"
+    print("PASS Test 16 passed")
+
+
 if __name__ == "__main__":
     print("Running timecode tests...\n")
     test_basic_addition()
@@ -139,4 +177,8 @@ if __name__ == "__main__":
     test_simple_basic()
     test_simple_overflow()
     test_simple_add_timecodes()
+    test_apply_to_all_add_frames()
+    test_apply_to_all_subtract_frames()
+    test_apply_to_all_decimal()
+    test_apply_to_all_simple()
     print("\nPASS All tests passed!")

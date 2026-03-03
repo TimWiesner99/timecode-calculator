@@ -5,6 +5,7 @@ description = "A desktop timecode calculator for adding timecodes in HH:MM:SS:FF
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
+    "customtkinter>=5.2.0",
     "pyinstaller>=6.19.0",
 ]
 
