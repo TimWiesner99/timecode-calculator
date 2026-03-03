@@ -30,25 +30,8 @@ fi
 
 echo ""
 echo "Starting Timecode Calculator..."
-echo ""
-echo "The application will open in your browser at:"
-echo "http://localhost:5000"
-echo ""
-echo "Press Ctrl+C to stop the server"
 echo "================================"
 echo ""
 
-# Open browser (works on macOS and most Linux systems)
-sleep 2
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # macOS
-    open http://localhost:5000 2>/dev/null &
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Linux
-    if command -v xdg-open &> /dev/null; then
-        xdg-open http://localhost:5000 2>/dev/null &
-    fi
-fi
-
-# Run the Flask app
+# Run the app
 uv run python app.py
